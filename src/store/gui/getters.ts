@@ -97,6 +97,11 @@ export const getters: GetterTree<GuiState, RootState> = {
             allPanels = allPanels.filter((name) => name !== 'mmu')
         }
 
+        // remove filaments panel, if the FILAMENTS_LOAD macro doesn't exist
+        if (!rootState.printer?.['gcode_macro FILAMENTS_LOAD']) {
+            allPanels = allPanels.filter((name) => name !== 'filaments')
+        }
+
         // remove led_effects panel, if no led_effect object exists in Klipper
         const ledEffectsPrefix = 'led_effect '
         const existsLedEffects = Object.keys(rootState.printer ?? {}).some((name) =>

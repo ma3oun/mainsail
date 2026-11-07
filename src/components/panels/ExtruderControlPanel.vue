@@ -82,6 +82,25 @@
         </template>
         <!-- TOOL SELECTOR BUTTONS -->
         <extruder-control-panel-tools v-if="showTools && toolchangeMacros.length" />
+        <!-- TOOLCHANGER BUTTONS (klipper-toolchanger) -->
+        <v-row v-if="existsToolchanger" class="mt-0 mb-3 px-3" dense>
+            <v-col class="pa-1">
+                <v-btn small block :disabled="printerIsPrinting" @click="doSend('INITIALIZE_TOOLCHANGER')">
+                    <v-icon left small>{{ mdiSwapVerticalBold }}</v-icon>
+                    {{ $t('Panels.ExtruderControlPanel.InitializeToolchanger') }}
+                </v-btn>
+            </v-col>
+            <v-col class="pa-1">
+                <v-btn
+                    small
+                    block
+                    :disabled="printerIsPrintingOnly || toolchangerToolNumber < 0"
+                    @click="doSend('UNSELECT_TOOL')">
+                    <v-icon left small>{{ mdiArrowUpBold }}</v-icon>
+                    {{ $t('Panels.ExtruderControlPanel.DockTool') }}
+                </v-btn>
+            </v-col>
+        </v-row>
         <!-- EXTRUSION FACTOR SLIDER -->
         <template v-if="showExtrusionFactor">
             <v-divider v-if="showTools" />
@@ -113,7 +132,7 @@
 </template>
 
 <script lang="ts">
-import { mdiPrinter3dNozzle, mdiDotsVertical } from '@mdi/js'
+import { mdiArrowUpBold, mdiPrinter3dNozzle, mdiDotsVertical, mdiSwapVerticalBold } from '@mdi/js'
 import { Component, Mixins } from 'vue-property-decorator'
 import { PrinterStateMacro } from '@/store/printer/types'
 import BaseMixin from '@/components/mixins/base'
@@ -124,11 +143,21 @@ import ExtruderMixin from '@/components/mixins/extruder'
 export default class ExtruderControlPanel extends Mixins(BaseMixin, ControlMixin, ExtruderMixin) {
     mdiPrinter3dNozzle = mdiPrinter3dNozzle
     mdiDotsVertical = mdiDotsVertical
+    mdiArrowUpBold = mdiArrowUpBold
+    mdiSwapVerticalBold = mdiSwapVerticalBold
 
     private heatWaitGcodes = ['printer.extruder.can_extrude', 'TEMPERATURE_WAIT', 'M109']
 
     get showPanel(): boolean {
         return this.klipperReadyForGui && this.extruders.length > 0
+    }
+
+    get existsToolchanger(): boolean {
+        return 'toolchanger' in this.$store.state.printer
+    }
+
+    get toolchangerToolNumber(): number {
+        return this.$store.state.printer.toolchanger?.tool_number ?? -1
     }
 
     get macros() {

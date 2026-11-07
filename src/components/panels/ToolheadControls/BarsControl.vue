@@ -4,6 +4,16 @@
         <v-row no-gutters>
             <v-col class="col-12 pb-0 text-center">
                 <v-btn
+                    v-if="existsCenterMacro"
+                    small
+                    :disabled="['printing'].includes(printer_state) || !homedAxes.includes('xyz')"
+                    color="primary"
+                    class="mr-2"
+                    @click="doSend('CENTER')">
+                    <v-icon class="mr-1">{{ mdiImageFilterCenterFocus }}</v-icon>
+                    {{ $t('Panels.ToolheadControlPanel.Center') }}
+                </v-btn>
+                <v-btn
                     small
                     :disabled="['printing'].includes(printer_state)"
                     :loading="loadings.includes('homeAll')"
@@ -153,12 +163,18 @@
 import { Component, Mixins } from 'vue-property-decorator'
 import BaseMixin from '@/components/mixins/base'
 import ControlMixin from '@/components/mixins/control'
-import { mdiEngineOff, mdiHome } from '@mdi/js'
+import { mdiEngineOff, mdiHome, mdiImageFilterCenterFocus } from '@mdi/js'
 
 @Component
 export default class BarsControl extends Mixins(BaseMixin, ControlMixin) {
     mdiEngineOff = mdiEngineOff
     mdiHome = mdiHome
+    mdiImageFilterCenterFocus = mdiImageFilterCenterFocus
+
+    // CENTER macro of the printer config: bed centre, Z=60
+    get existsCenterMacro(): boolean {
+        return 'gcode_macro CENTER' in this.$store.state.printer
+    }
 
     get enableXYHoming(): boolean {
         return this.$store.state.gui.control.enableXYHoming

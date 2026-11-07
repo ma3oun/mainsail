@@ -112,6 +112,7 @@ export const allDashboardPanels = [
     'afc',
     'toolhead-control',
     'extruder-control',
+    'filaments',
     'macros',
     'led-effects',
     'machine-settings',

@@ -685,6 +685,7 @@
         "ExtruderControlPanel": {
             "Allowed": "Allowed",
             "CleanNozzle": "Clean Nozzle",
+            "DockTool": "Dock tool",
             "EstimatedExtrusion": "Extrusion:",
             "Extrude": "Extrude",
             "ExtruderControl": "Extruder Control",
@@ -700,6 +701,7 @@
                 "UnretractSpeed": "Unretract Speed"
             },
             "Headline": "Extruder",
+            "InitializeToolchanger": "Initialize",
             "LoadFilament": "Load Filament",
             "PressureAdvance": "Pressure Advance",
             "PressureAdvanceSettings": {
@@ -719,6 +721,18 @@
             "ReconnectToPrinter": "Reconnect",
             "SwitchToPrinter": "Switch to Printer",
             "WebcamOff": "Off"
+        },
+        "FilamentsPanel": {
+            "Headline": "Filaments",
+            "Heating": "heating",
+            "load": "Loading",
+            "Load": "Load",
+            "Sensors": "Filament switches: upper, lower",
+            "Stop": "Stop",
+            "Temperature": "Temperature",
+            "unload": "Unloading",
+            "Unload": "Unload",
+            "WaitingFilament": "insert filament"
         },
         "KlippyStatePanel": {
             "CheckKlippyAndUdsAddress": "Please check if the Klipper service is running and klippy_uds_address is correctly configured in the moonraker.conf.",
@@ -1055,6 +1069,7 @@
         "ToolheadControlPanel": {
             "Absolute": "absolute",
             "ALL": "ALL",
+            "Center": "Center",
             "ControlButtons": "Control buttons",
             "CoordinateFields": "Coordinate fields",
             "Headline": "Toolhead",
