@@ -1,14 +1,15 @@
 name: Fork release
 
 # Builds this fork and publishes it as a GitHub release, so Moonraker's update manager can install it
-# (point [update_manager mainsail] at this repo, see README). Runs on every push to develop, or by hand.
+# (point [update_manager mainsail] at this repo). Runs on every push to voron (the fork's branch,
+# based on an upstream release tag; develop stays a mirror of upstream), or by hand.
 # Upstream's release.yml needs mainsail-crew's secrets and doesn't work on a fork.
 
 run-name: Fork release ${{ inputs.version || github.sha }}
 
 on:
   push:
-    branches: [develop]
+    branches: [voron]
   workflow_dispatch:
     inputs:
       version:
